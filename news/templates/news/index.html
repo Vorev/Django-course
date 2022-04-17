@@ -3,56 +3,45 @@
 
 {% block title %}
     {{ title }}
-{%endblock %}
+{% endblock %}
 
 {% block sidebar %}
-    <div class="col-md-2">
-
-            <div class="list-group">
-                {% for item in categories %}
-                     <a href="{% url 'category' item.pk %}" class="list-group-item list-group-item-action">{{ item.title }}</a>
-                {% endfor %}
-{#              <a href="#" class="list-group-item list-group-item-action">A third link item</a>#}
-{#              <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>#}
-{#              <a class="list-group-item list-group-item-action disabled">A disabled link item</a>#}
-            </div>
-
-        </div>
+    {% include 'Inc/_sidebar.html' %}
 {% endblock %}
 
 {% block content %}
-     <div class="col-md-10">
-       {% for item in news  %}
-            {% if item.is_published %}
 
-                <div class="card mb-3">
-                  <div class="card-header">
-                    <a href="{% url 'category' item.category.pk %}"> Категория: {{item.category}} </a>
-                  </div>
-                  <div class="card-body">
-                      <div class="media" class="d-flex">
-                          {% if item.photo %}
-                            <img  src ="{{ item.photo.url }}" alt ="" width="350"  class="me-3 float-start">
-                          {% else %}
-                              <img src="https://picsum.photos/id/237/200/300" alt="" width="350"  class="me-3 float-start">
-                          {% endif %}
-                          <div class="media-body">
-                                <h5 class="card-title">{{item.title}}</h5>
-                                {% autoescape off %}
-                                <p class="card-text">{{item.content|truncatewords:50}}</p>
-                                {% endautoescape %}
-                                <a href="#" class="btn btn-primary">Read more...</a>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="card-footer text-muted">
-                    {{item.created_at|date:'d/m/Y H:i:s'}}
-                  </div>
+    {% for item in news %}
+        {% if item.is_published %}
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <a href="{% url 'category' item.category.pk %}"> Категория: {{ item.category }} </a>
                 </div>
+                <div class="card-body">
+                    <div class="media" class="d-flex">
+                        {% if item.photo %}
+                            <img src="{{ item.photo.url }}" alt="" width="350" class="me-3 float-start">
+                        {% else %}
+                            <img src="https://picsum.photos/id/237/200/300" alt="" width="350" class="me-3 float-start">
+                        {% endif %}
+                        <div class="media-body">
+                            <h5 class="card-title">{{ item.title }}</h5>
+                            {% autoescape off %}
+                                <p class="card-text">{{ item.content|truncatewords:50 }}</p>
+                            {% endautoescape %}
+                            <a href="#" class="btn btn-primary">Read more...</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ item.created_at|date:'d/m/Y H:i:s' }}
+                </div>
+            </div>
 
-            {% endif %}
-        {% endfor %}
-        </div>
+        {% endif %}
+    {% endfor %}
+
 {% endblock %}
 
 

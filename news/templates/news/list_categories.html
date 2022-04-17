@@ -1,0 +1,12 @@
+{% load news_tags %}
+
+{#{{ arg1 }} {{ arg2 }}#}
+<div class="list-group">
+
+     {% for item in categories %}
+        <a href="{% url 'category'  item.pk %}" class="list-group-item list-group-item-action">{{ item.title }}</a>
+    {% endfor %}
+    {#              <a href="#" class="list-group-item list-group-item-action">A third link item</a>#}
+    {#              <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>#}
+    {#              <a class="list-group-item list-group-item-action disabled">A disabled link item</a>#}
+</div>
