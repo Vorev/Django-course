@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 # Create your models here.
@@ -12,6 +13,9 @@ class News(models.Model):
     is_published = models.BooleanField(default=1, verbose_name='Опубликовано')
     category = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, verbose_name='Категория')
 
+    def get_absolute_url(self):
+        return reverse('view_news', kwargs={'news_id': self.pk})
+
     def __str__(self):
         return self.title
 
@@ -23,6 +27,9 @@ class News(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=100, verbose_name='Категория', db_index=True)
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'category_id': self.pk})
 
     def __str__(self):
         return self.title
