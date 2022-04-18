@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Добавление Новости :: {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'Inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <h1>Добавление Новости</h1>
+
+    <form action="{% url 'add_news' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary"> Добавить новость</button>
+        </div>
+    </form>
+
+
+{% endblock %}
+
+
+
+

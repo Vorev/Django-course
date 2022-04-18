@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import News, Category
 from django.shortcuts import get_object_or_404
+from .forms import NewsForm
 
 
 def index(request):
@@ -35,3 +36,16 @@ def view_news(request, news_id):
      }
 
     return render(request, 'news/view_news.html', context)
+
+
+def add_news(request):
+    if request.method == 'POST':
+        form = NewsForm()
+    else:
+        form = NewsForm()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'news/add_news.html', context)
