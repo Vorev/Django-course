@@ -4,4 +4,5 @@ __pycache__/
 venv/
 *. pyc
 static/
-/media/
+media/
+
