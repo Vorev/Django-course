@@ -3,6 +3,22 @@ from django.http import HttpResponse
 from .models import News, Category
 from django.shortcuts import get_object_or_404
 from .forms import NewsForm
+from django.views.generic import ListView
+
+
+class HomeNews(ListView):
+    model = News
+    template_name = 'news/home_news_list.html'
+    context_object_name = 'news'
+    # extra_context = {'title': 'Главная'}
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Главная страница'
+        return context
+
+    def get_queryset(self):
+        return News.objects.filter(is_published=True)
 
 
 def index(request):
@@ -28,12 +44,12 @@ def get_category(request, category_id):
 
 
 def view_news(request, news_id):
-    news_item = get_object_or_404(News, pk= news_id)
+    news_item = get_object_or_404(News, pk=news_id)
     # news_item = News.objects.get(pk=news_id)
 
     context = {
         'news_item': news_item
-     }
+    }
 
     return render(request, 'news/view_news.html', context)
 
