@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from .models import News, Category
 from django.shortcuts import get_object_or_404
 from .forms import NewsForm
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse_lazy
 
 
 class HomeNews(ListView):
@@ -35,6 +36,19 @@ class NewsByCategory(ListView):
 
     def get_queryset(self):
         return News.objects.filter(is_published=True, category_id=self.kwargs['category_id'])
+
+
+class ViewNews(DetailView):
+    model = News
+    context_object_name = 'news_item'
+    #pk_url_kwarg = 'news_id'
+    # template_name = 'news/news_detail.html'
+
+
+class CreateNews(CreateView):
+    form_class = NewsForm
+    template_name = 'news/add_news.html'
+    # success_url = reverse_lazy('home')
 
 
 def index(request):
